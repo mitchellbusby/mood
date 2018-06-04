@@ -28,7 +28,7 @@ module Mood
     def self.listen
       self.perform_with_bot do |bot|
         bot.listen do |message|
-          if message.text.to_i > 0 || message.text.strip.start_with?("0")
+          if message.text != nil && (message.text.to_i > 0 || message.text.strip.start_with?("0")
             # As 0 is also a valid value
             rating = message.text.to_i
 
@@ -68,7 +68,7 @@ module Mood
           g.write(file_path)
 
           bot.api.send_photo(
-            chat_id: message.chat.id, 
+            chat_id: message.chat.id,
             photo: Faraday::UploadIO.new(file_path, 'image/png')
           )
         else
